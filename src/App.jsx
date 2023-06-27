@@ -51,6 +51,10 @@ function App() {
     return null
   }
 
+  const checkEndGame = (newBoard) =>{
+    return newBoard.every((Square) => Square != null)
+  }
+
   const updateboard = (index) =>{
     if(board[index] || winner) return //si hay algo ya en el board no haga nada, winner no esta vacio
     //actualiza tablero
@@ -65,12 +69,23 @@ function App() {
     if (newWinner){
       setwinner(newWinner)  //actualización asincrona, no bloquea la ejecución del codigo.
     }
+    // Revisa si se rellenaron todas posiciones
+    else if(checkEndGame(newBoard)){
+      setwinner(false)
+    
+    }
   }
 
- 
+  const resetGame= () =>{
+    setBoard(Array(9).fill(null))
+    setTurn(TURNS.X)
+    setwinner(null)
+  }
+
   return (  
     <main className='board'>
        <h1>Juega Triqui</h1>
+       <button onClick={resetGame}> Reset </button>
       <section className='game'>
         {
           board.map((_, index) => {
@@ -91,6 +106,28 @@ function App() {
         </Square> 
 
       </section>
+
+      {
+        winner != null &&(
+          <section className='winner'>
+            <div className=' text'>
+              <h2>
+                {
+                  winner === false ? 'empate': 'ganador'
+                }               
+              </h2>
+              <header className='win'>
+               {winner && <Square> {winner}</Square>} 
+              </header>
+              <footer>
+                <button onClick={resetGame}> Empezar de nuevo</button>
+              </footer> 
+            </div>
+
+          </section>
+
+        )
+      }
 
 
     </main>
