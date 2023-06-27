@@ -1,13 +1,9 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'  
-
 const TURNS = {
   X:'x',
   O: 'o'
 }
-
 const WINNER_COMBOS = [
   [0, 1, 2],
   [3, 4, 5],
@@ -18,7 +14,6 @@ const WINNER_COMBOS = [
   [0, 4, 8],
   [2, 4, 6]
 ]
-
 const Square = ({children, isSelected, updateboard, index}) =>{ //componente
   const className = `square ${isSelected ? 'is-selected' : ''}`
   const handleClick = () =>{
@@ -31,14 +26,10 @@ const Square = ({children, isSelected, updateboard, index}) =>{ //componente
     </div>
   )
 }
-
-
-
 function App() {
   const [board, setBoard] = useState(Array(9).fill(null)) //estado tablero
   const [turn, setTurn] = useState(TURNS.X) //estado del turno
   const [winner, setwinner] = useState(null) //esatdo ganador, null-no hay nada, false-empate, algo-ganador
-
   const checkWinner = (boardToCheck) => {
     //revisa si se cumplen las combinaciones
     for (const combo of WINNER_COMBOS){
@@ -72,7 +63,7 @@ function App() {
     // Revisa si se rellenaron todas posiciones
     else if(checkEndGame(newBoard)){
       setwinner(false)
-    
+
     }
   }
 
@@ -81,6 +72,7 @@ function App() {
     setTurn(TURNS.X)
     setwinner(null)
   }
+
 
   return (  
     <main className='board'>
@@ -131,8 +123,6 @@ function App() {
 
 
     </main>
-     
   )
 }
-
 export default App
